@@ -1,6 +1,8 @@
 package com.firstproject.minorproject.attendegister_beta;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.internal.NavigationMenu;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -27,8 +30,8 @@ public class HomeActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(HomeActivity.this, AddSubjectActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -40,6 +43,25 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        if(getIntent().getExtras() != null)
+        {
+            Intent intent_obj = getIntent();
+            Bundle b = intent_obj.getExtras();
+            String sub_name = b.getString("subject_name");
+            Toast.makeText(this, sub_name+" added to your list", Toast.LENGTH_LONG).show();
+
+            final Menu menu = navigationView.getMenu();
+            menu.add(sub_name);
+        }
+
+        /*Intent intent_obj = getIntent();
+        Bundle b = intent_obj.getExtras();
+        String sub_name = b.getString("subject_name");
+        Toast.makeText(this, sub_name+" added to your list", Toast.LENGTH_LONG).show();
+
+        final Menu menu = navigationView.getMenu();
+        menu.add(sub_name);*/
     }
 
     @Override
@@ -51,6 +73,7 @@ public class HomeActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -74,6 +97,7 @@ public class HomeActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -84,9 +108,12 @@ public class HomeActivity extends AppCompatActivity
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
 
+
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
+            Intent intent = new Intent(this, AddSubjectActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_share) {
 
